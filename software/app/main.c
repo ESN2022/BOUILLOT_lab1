@@ -45,17 +45,20 @@ int main ()
 	alt_ic_isr_register(PIO_1_IRQ_INTERRUPT_CONTROLLER_ID,PIO_1_IRQ,(void*) switch_interrupts,NULL, 0x0);
 	
 	sw=0;
+	
 	while(1){
-		
-		/*Boucle du chenillard*/
-		for (i=0;i<7;i++){
-			IOWR_ALTERA_AVALON_PIO_DATA(PIO_0_BASE,1<<i);
-			usleep(time);
+		if (IORD_ALTERA_AVALON_PIO_DATA(PIO_2_BASE) == 0x0)
+		{
+			/*Boucle du chenillard*/
+			for (i=0;i<7;i++){
+				IOWR_ALTERA_AVALON_PIO_DATA(PIO_0_BASE,1<<i);
+				usleep(time);
+			}
+			for (i=7;i>0;i--){
+				   IOWR_ALTERA_AVALON_PIO_DATA(PIO_0_BASE,1<<i);
+				   usleep(time);
+				}	
 		}
-		for (i=7;i>0;i--){
-			   IOWR_ALTERA_AVALON_PIO_DATA(PIO_0_BASE,1<<i);
-			   usleep(time);
-			}	
 	}
 	return 0;
 }

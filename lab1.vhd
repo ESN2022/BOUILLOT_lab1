@@ -7,7 +7,8 @@ entity lab1 is
 			clk : in std_logic;
 			reset : in std_logic;
 			pio_0 : out std_logic_vector(7 downto 0);
-			pio_1 : in std_logic_vector(3 downto 0)
+			pio_1 : in std_logic_vector(3 downto 0);
+			pio_2 : in std_logic
 	);
 end lab1;
 
@@ -19,7 +20,8 @@ architecture arch of lab1 is
             clk_clk 											: in std_logic := 'X';  -- clk
 				reset_reset_n 									: in std_logic := 'X'; --reset_n
 				pio_0_external_connection_export 		: out std_logic_vector(7 downto 0);
-				pio_1_external_connection_export			: in std_logic_vector(3 downto 0) := (others => 'X')
+				pio_1_external_connection_export			: in std_logic_vector(3 downto 0) := (others => 'X');
+				pio_2_external_connection_export			: in std_logic := 'X'
         );
    end component lab1_qsys;
 	begin
@@ -29,6 +31,7 @@ architecture arch of lab1 is
             clk_clk => clk,
 				reset_reset_n => reset,
 				pio_0_external_connection_export => pio_0,
-				pio_1_external_connection_export => pio_1
+				pio_1_external_connection_export => pio_1,
+				pio_2_external_connection_export => pio_2
         );
 end arch;
