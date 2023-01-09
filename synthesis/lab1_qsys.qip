@@ -2,7 +2,7 @@ set_global_assignment -entity "lab1_qsys" -library "lab1_qsys" -name IP_TOOL_NAM
 set_global_assignment -entity "lab1_qsys" -library "lab1_qsys" -name IP_TOOL_VERSION "18.1"
 set_global_assignment -entity "lab1_qsys" -library "lab1_qsys" -name IP_TOOL_ENV "Qsys"
 set_global_assignment -library "lab1_qsys" -name SOPCINFO_FILE [file join $::quartus(qip_path) "../lab1_qsys.sopcinfo"]
-set_global_assignment -entity "lab1_qsys" -library "lab1_qsys" -name SLD_INFO "QSYS_NAME lab1_qsys HAS_SOPCINFO 1 GENERATION_ID 1672849397"
+set_global_assignment -entity "lab1_qsys" -library "lab1_qsys" -name SLD_INFO "QSYS_NAME lab1_qsys HAS_SOPCINFO 1 GENERATION_ID 1673268851"
 set_global_assignment -library "lab1_qsys" -name MISC_FILE [file join $::quartus(qip_path) "../lab1_qsys.cmp"]
 set_global_assignment -library "lab1_qsys" -name SLD_FILE [file join $::quartus(qip_path) "lab1_qsys.regmap"]
 set_global_assignment -library "lab1_qsys" -name SLD_FILE [file join $::quartus(qip_path) "lab1_qsys.debuginfo"]
@@ -16,7 +16,7 @@ set_global_assignment -entity "lab1_qsys" -library "lab1_qsys" -name IP_COMPONEN
 set_global_assignment -entity "lab1_qsys" -library "lab1_qsys" -name IP_COMPONENT_REPORT_HIERARCHY "On"
 set_global_assignment -entity "lab1_qsys" -library "lab1_qsys" -name IP_COMPONENT_INTERNAL "Off"
 set_global_assignment -entity "lab1_qsys" -library "lab1_qsys" -name IP_COMPONENT_VERSION "MS4w"
-set_global_assignment -entity "lab1_qsys" -library "lab1_qsys" -name IP_COMPONENT_PARAMETER "QVVUT19HRU5FUkFUSU9OX0lE::MTY3Mjg0OTM5Nw==::QXV0byBHRU5FUkFUSU9OX0lE"
+set_global_assignment -entity "lab1_qsys" -library "lab1_qsys" -name IP_COMPONENT_PARAMETER "QVVUT19HRU5FUkFUSU9OX0lE::MTY3MzI2ODg1MQ==::QXV0byBHRU5FUkFUSU9OX0lE"
 set_global_assignment -entity "lab1_qsys" -library "lab1_qsys" -name IP_COMPONENT_PARAMETER "QVVUT19ERVZJQ0VfRkFNSUxZ::TUFYIDEw::QXV0byBERVZJQ0VfRkFNSUxZ"
 set_global_assignment -entity "lab1_qsys" -library "lab1_qsys" -name IP_COMPONENT_PARAMETER "QVVUT19ERVZJQ0U=::MTBNNTBEQUY0ODRDN0c=::QXV0byBERVZJQ0U="
 set_global_assignment -entity "lab1_qsys" -library "lab1_qsys" -name IP_COMPONENT_PARAMETER "QVVUT19ERVZJQ0VfU1BFRURHUkFERQ==::Nw==::QXV0byBERVZJQ0VfU1BFRURHUkFERQ=="
