@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <sys/alt_irq.h>
 
-int i=0, time=0, sw;
+int i=0, time=0, sw, start;
 
 /*Définition de la routine d'interruption*/
 
@@ -31,6 +31,15 @@ static void switch_interrupts ()
 	IOWR_ALTERA_AVALON_PIO_EDGE_CAP(PIO_1_BASE, 0xf);
 }
 
+static void button_interrupts()
+{
+	if (IORD_ALTERA_AVALON_PIO_DATA(PIO_2_BASE) == 0x0)
+	{
+		start = 1;
+	}
+	IOWR_ALTERA_AVALON_PIO_EDGE_CAP(PIO_2_BASE, 0xf);
+}
+
 
 int main ()
 {
@@ -44,10 +53,14 @@ int main ()
 	/* Definition du registre d'interruption */
 	alt_ic_isr_register(PIO_1_IRQ_INTERRUPT_CONTROLLER_ID,PIO_1_IRQ,(void*) switch_interrupts,NULL, 0x0);
 	
+	IOWR_ALTERA_AVALON_PIO_IRQ_MASK(PIO_2_BASE, 0xf);
+	IOWR_ALTERA_AVALON_PIO_EDGE_CAP(PIO_2_BASE, 0xf);
+	alt_ic_isr_register(PIO_2_IRQ_INTERRUPT_CONTROLLER_ID,PIO_1_IRQ,(void*) button_interrupts,NULL, 0x0);
+	
 	sw=0;
 	
 	while(1){
-		if (IORD_ALTERA_AVALON_PIO_DATA(PIO_2_BASE) == 0x0)
+		if (start==1)
 		{
 			/*Boucle du chenillard*/
 			for (i=0;i<7;i++){
