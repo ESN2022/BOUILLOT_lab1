@@ -47,6 +47,8 @@ https://user-images.githubusercontent.com/121939768/211591566-910c652c-735b-41a7
 
 2-- Gestion de la vitesse du chenillard
 
+![image](https://user-images.githubusercontent.com/121939768/211847682-d80ade8b-1514-4c5f-a955-81068b2ee8e2.png)
+
 Une fois cette fonction comprise et fonctionnelle, j'ai commencé à modifier la fonction usleep me permettant de gérer la durée d'allumage des leds 
 (et donc la vitesse du chenillard). Deux méthodes peuvent alors être utilisée : soit par scrutation (pulling) ou par interruption. Aussi pour gérer les entrées générées par les switchs, un autre PIO doit être ajouté à Platform Designer.
 ![image](https://user-images.githubusercontent.com/121939768/211593754-cd00b4fa-7adb-49b5-9c71-c25246c9271e.png)
@@ -74,16 +76,14 @@ https://user-images.githubusercontent.com/121939768/211765944-18b00004-7b51-41e3
 
 3-- Ajout d'un bouton poussoir
 
+![image](https://user-images.githubusercontent.com/121939768/211847534-4094e2de-b75f-4b9d-a4d4-c0b5e9fcd8fa.png)
+
 Enfin la dernière étape est d'ajouter un boutton qui va permettre le lancement (trigger) du chenillard. Plusieurs choix s'offre à nous : soit on ajoute une entrée au PIO 1 et on peut l'utiliser en pulling ou en interruption, soit créer un 3ème PIO que l'on pourra utiliser également en pulling et en interruption. En testant les deux façons, j'ai préféré utiliser un PIO séparé puisque, pour ma solution, il est mieux d'effectuer un pulling sur le bouton pour éviter de créer une interruption trop gourmande en temps (permettant la génération du chenillard) et possiblement blocante.
 Il aurait alors fallu avoir 2 boutons sur ce PIO, le premier lançant le chenillard par une interruption et le second l'arrêtant. Cela aurait alors permis de bien choisir la vitesse du chenillard par interruption (voir la seconde vidéo).
 
 A noter que pour ce dernier PIO il faut refaire le flow de developpement complet avec le Pin planner, le VHDL ainsi que le main. (voir codes)
 
 ![image](https://user-images.githubusercontent.com/121939768/211607119-547483a0-ce8a-444e-85ed-187f1bacc834.png)
-
-Fichier VHDL : 
-
-![image](https://user-images.githubusercontent.com/121939768/211763205-9198092a-9300-4d5e-8de4-c0e9e3de42a7.png)
 
 Le fichier VHDL reprend alors toutes les connections hardware des PIO, clock et reset connectés au FPGA.
 
