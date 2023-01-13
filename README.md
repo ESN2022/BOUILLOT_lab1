@@ -8,7 +8,7 @@ b. System architecture with QSYS components and their interaction, HW blocks, de
 
 c. Conclusion, progress and result
 
-### Introduction
+## Introduction
 
 Dans ce premier lab, je vais mettre en application le cours d'esn 10 en réalisant un flow complet de conception à travers un exemple assez
 simple : il s'agit d'un chenillard. Ce programme va venir allumer et etteindre plusieurs Leds présente sur notre cible de manière à créer une
@@ -17,8 +17,8 @@ simple : il s'agit d'un chenillard. Ce programme va venir allumer et etteindre p
 réveller beaucoup plus compliqué que prévu notaament avec l'utilisation des périphériques tels que les Leds (permettant d'afficher le chenillard), 
 les boutons poussoirs et enfin les switchs. Tous ces périphériques vont alors être amené à communiquer avec le FPGA amenant parfois à quelques conflits.
 
-### System architecture
-1-- Configuration du projet sous Quartus
+## System architecture
+### 1-- Configuration du projet sous Quartus
 
 Dans un premier temps, on va venir configurer Quartus à notre cible. Pour cela, on va venir entrer le modèle du FPGA dans Quartus lors de la création de 
 notre nouveau project wizzard.
@@ -45,7 +45,7 @@ Ainsi la vidéo suivante montre le fonctionnement du chenillard.
 
 https://user-images.githubusercontent.com/121939768/211591566-910c652c-735b-41a7-86a2-a1ca4c984cd1.mov
 
-2-- Gestion de la vitesse du chenillard
+### 2-- Gestion de la vitesse du chenillard
 
 ![image](https://user-images.githubusercontent.com/121939768/211847682-d80ade8b-1514-4c5f-a955-81068b2ee8e2.png)
 
@@ -74,7 +74,7 @@ On peut alors voir que le chenillard change de vitesse en fonction du switch act
 
 https://user-images.githubusercontent.com/121939768/211765944-18b00004-7b51-41e3-a6db-1c2c605bfc30.mov
 
-3-- Ajout d'un bouton poussoir
+### 3-- Ajout d'un bouton poussoir
 
 ![image](https://user-images.githubusercontent.com/121939768/211847534-4094e2de-b75f-4b9d-a4d4-c0b5e9fcd8fa.png)
 
@@ -92,7 +92,7 @@ Voici une vidéo montrant le fonctionnement du boutton trigger :
 https://user-images.githubusercontent.com/121939768/211772193-5c8eac64-8597-4229-9de5-53cf713102e3.MOV
 
 
-### Conclusion, progress and result
+## Conclusion, progress and result
 
 Ma progression pour ce premier lab est la suivante :
  - Génération du chenillard
