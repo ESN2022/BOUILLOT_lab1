@@ -21,9 +21,7 @@ les boutons poussoirs et enfin les switchs. Tous ces périphériques vont alors 
 ### 1-- Configuration du projet sous Quartus
 
 Dans un premier temps, on va venir configurer Quartus à notre cible. Pour cela, on va venir entrer le modèle du FPGA dans Quartus lors de la création de 
-notre nouveau project wizzard.
-![image](https://user-images.githubusercontent.com/121939768/211576860-034593fd-edbd-4765-896f-a611ebca1268.png)
-
+notre nouveau project wizzard (soit Max 10, 10M50DAF484C7G)
 Quartus est maintenant configuré pour notre cible. Pour effectué ce premier exercice, il nous faut plusieurs choses, notamment un Nios2 et ses périphériques
 permettant la gestion des boutons et des Leds. Tout cela est donc configuré sous Platform Designer via l'intégration d'IP (Intellectual properties). J'ai 
 alors utilisé :
@@ -33,17 +31,13 @@ alors utilisé :
  - Jtag (permettant l'intérraction avec la cible)
  - 3 PIO
 Les 3 PIO vont permettre de gérer nos entrée-sorties avec le premier permettant de gérer les sorties, les deux derniers permettant la gestion des entrées. 
-Le montage final sur Platform Designer est le suivant :
-![image](https://user-images.githubusercontent.com/121939768/211581020-386ebe2c-e44b-4f15-a099-31b3c6954899.png)
 
 Chaque bloc (ou IP) possède une fonctionnalité spécifique sur notre cible. Comme expliqué précedemment, le bloc Clock va venir définir la cadence de communication entre chaque bloc et au sein d'un même bloc. Le Nios2 est le softcore que l'on va programmer sur le FPGA et qui va venir éxecuter notre script en C. Le Onchip Memory va venir sauvegarder notre soft avec toutes ses variables et bibliothèques. Enfin les PIO sont créés pour raccorder les périphériques (boutons, switchs et Leds) avec le Nios.J'ai d'abord commencé par créé le chenillard sans actionneur à l'aide du premier PIO. Le PIO 0 est alors utilisé pour gérer les sorties (soit l'allumage des Leds). 
 Il ne faut pas oublier de paramétrer les broches du FPGA via Pin planer. J'ai alors cherché dans la datasheet de la carte DE10-Lite qulles broches correspond la clock, le reset et enfin les Leds.
 
-![image](https://user-images.githubusercontent.com/121939768/211594484-83545a5f-690b-47a9-93b1-348d7c277c79.png)
-
 Ainsi la vidéo suivante montre le fonctionnement du chenillard.
 
-https://user-images.githubusercontent.com/121939768/211591566-910c652c-735b-41a7-86a2-a1ca4c984cd1.mov
+https://user-images.githubusercontent.com/121939768/211591566-910c652c-735b-41a7-86a2-a1ca4c984cd1.MOV
 
 ### 2-- Gestion de la vitesse du chenillard
 
@@ -54,8 +48,6 @@ Une fois cette fonction comprise et fonctionnelle, j'ai commencé à modifier la
 ![image](https://user-images.githubusercontent.com/121939768/211593754-cd00b4fa-7adb-49b5-9c71-c25246c9271e.png)
 
 Il faut alors retourner sous Pin planer pour assigner les nouvelles broches du FPGA.
-![image](https://user-images.githubusercontent.com/121939768/211594844-37b05c0d-f041-4e59-ba3a-fabdff8599e4.png)
-
 Comme les switchs sont réalisés en pulling, le chenillard doit revenir au début pour prendre en compte la modification de vitesse. Le principe du pulling est que le programme va aller intérroger le périphérique sur son état espacé d'un temps précis. Malheureusement, la vidéo est trop longue et je ne peux pas l'uploader sur ce rapport.
 
 Afin de pouvoir prendre en compte plus rapidement le changement de vitesse, je choisis d'utiliser le PIO en interruption. Je modifie donc le PIO 1 sur Platforme designer :
@@ -67,12 +59,20 @@ On vient alors spécifier que l'on choisis le mode d'interruption sur front et n
 
 On vient alors entrer le niveau d'interruption dans la colonne irq. Une fois cela effectuer on vient ajouter ce périphérique dans le vhdl et le fichier .c. Dans le fichier .c on vient spécifier qui porte l'interruption ainsi que la routine d'interruption à effectuer. Cela se fait via les commandes suivantes :
 
-![image](https://user-images.githubusercontent.com/121939768/211603863-85401543-f2ba-4d3a-a6d9-10e692122a84.png)
+/*Les 4 switchs vont pouvoir générer l'interruption*/
+IOWR_ALTERA_AVALON_PIO_IRQ_MASK(PIO_1_BASE, 0xf);
+
+/*Initialisation du registre edge capture*/
+IOWR_ALTERA_AVALON_PIO_EDGE_CAPTURE(PIO_1_BASE, 0xf);
+
+/*Definition du registre d'interruption*/
+alt_ic_isr_register(PIO_1_IRQ_INTERRUPT_CONTROLLER_ID,PIO_1_IRQ,(void*) switch_interrupts,NULL, 0x0);
+
 
 A noter que ces macros sont incluse dans le fichier alt_irq.h qu'il faut alors inclure. (voir le main.c)
 On peut alors voir que le chenillard change de vitesse en fonction du switch activé et qu'il n'a pas besoin de revenir au début pour changer de vitesse. On voit alors toute l'utilité des interruptions. 
 
-https://user-images.githubusercontent.com/121939768/211765944-18b00004-7b51-41e3-a6db-1c2c605bfc30.mov
+https://user-images.githubusercontent.com/121939768/211765944-18b00004-7b51-41e3-a6db-1c2c605bfc30.MOV
 
 ### 3-- Ajout d'un bouton poussoir
 
@@ -82,8 +82,6 @@ Enfin la dernière étape est d'ajouter un boutton qui va permettre le lancement
 Il aurait alors fallu avoir 2 boutons sur ce PIO, le premier lançant le chenillard par une interruption et le second l'arrêtant. Cela aurait alors permis de bien choisir la vitesse du chenillard par interruption (voir la seconde vidéo).
 
 A noter que pour ce dernier PIO il faut refaire le flow de developpement complet avec le Pin planner, le VHDL ainsi que le main. (voir codes)
-
-![image](https://user-images.githubusercontent.com/121939768/211607119-547483a0-ce8a-444e-85ed-187f1bacc834.png)
 
 Le fichier VHDL reprend alors toutes les connections hardware des PIO, clock et reset connectés au FPGA.
 
